@@ -98,12 +98,14 @@ export class App extends Component {
         productCardBtn.style.marginRight = "10px";
         productCardBtn.onclick = () => {
           const itemCount = parseInt(headerItemsInCart.textContent);
+          const totalPrice = Number(headerPrice.textContent);
+          const toInt = (num) => Math.trunc(num * 20);
 
           if (productCardBtn.textContent === "Add to Cart") {
             productCardBtn.textContent = "Remove from Cart";
             headerItemsInCart.textContent = itemCount + 1;
             headerPrice.textContent =
-              parseFloat(headerPrice.textContent) + product.price;
+              (toInt(totalPrice) + toInt(product.price)) / 20;
 
             // create a product card quantity input
             const productCardLabel = document.createElement("label");
@@ -118,6 +120,9 @@ export class App extends Component {
               const quantity = parseInt(event.target.value);
               // update item count in cart
               headerItemsInCart.textContent = itemCount + quantity;
+              // update total price
+              headerPrice.textContent =
+                (toInt(totalPrice) + toInt(product.price) * quantity) / 20;
             };
             productCardInput.id = `productCardInput-${product.id}`;
             productCardTextInfo.appendChild(productCardInput);
@@ -134,8 +139,12 @@ export class App extends Component {
             `#productCardInput-${product.id}`
           );
           headerItemsInCart.textContent = itemCount - productCardInput.value;
-          productCardInput.remove();
+          headerPrice.textContent =
+            (toInt(totalPrice) -
+              toInt(product.price) * Number(productCardInput.value)) /
+            20;
 
+          productCardInput.remove();
           document.querySelector(`#productCardLabel-${product.id}`).remove();
         };
         productCardTextInfo.appendChild(productCardBtn);
