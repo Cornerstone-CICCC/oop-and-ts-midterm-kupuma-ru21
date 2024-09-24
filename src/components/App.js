@@ -7,22 +7,27 @@ export class App extends Component {
       const productsData = await fetch("https://fakestoreapi.com/products");
       const products = await productsData.json();
 
-      // create a container
-      const container = document.createElement("div");
+      // create a wrapper
+      const wrapper = document.createElement("div");
 
       // create a header
       const header = document.createElement("header");
       header.style.display = "flex";
       header.style.justifyContent = "space-between";
+      header.style.alignItems = "center";
       header.style.outline = "1px solid gray";
       header.style.padding = "8px";
       header.style.position = "sticky";
       header.style.top = "0";
-      header.style.backgroundColor = "white";
+      header.style.backgroundColor = "#0F141A";
+      header.style.color = "#fff";
 
-      const headerLogoText = document.createElement("span");
-      headerLogoText.textContent = "Fake Store";
-      header.appendChild(headerLogoText);
+      const headerLogo = document.createElement("img");
+      headerLogo.src = "/public/logo.svg";
+      headerLogo.alt = "logo";
+      headerLogo.style.width = "130px";
+      headerLogo.style.height = "50px";
+      header.appendChild(headerLogo);
 
       const headerCart = document.createElement("div");
       headerCart.style.display = "flex";
@@ -34,21 +39,26 @@ export class App extends Component {
       headerItemsInCart.textContent = "0";
       headerItemsInCartDescription.appendChild(headerItemsInCart);
       headerCart.appendChild(headerItemsInCartDescription);
-      header.appendChild(headerCart);
 
       const headerPriceDescription = document.createElement("span");
       headerPriceDescription.textContent = "/ Total Price: $ ";
       const headerPrice = document.createElement("span");
       headerPrice.textContent = "0";
       headerPriceDescription.appendChild(headerPrice);
+
       headerCart.appendChild(headerPriceDescription);
       header.appendChild(headerCart);
 
-      container.appendChild(header);
+      wrapper.appendChild(header);
+
+      // create a container
+      const container = document.createElement("div");
+      container.style.padding = "20px";
 
       // create a title
       const title = document.createElement("h1");
       title.textContent = "Products";
+      title.style.marginBottom = "20px";
       container.appendChild(title);
 
       // create a productsContainer
@@ -62,7 +72,7 @@ export class App extends Component {
       products.forEach((product) => {
         const productCard = document.createElement("div");
         productCard.style.display = "flex";
-        productCard.style.gap = "8px";
+        productCard.style.gap = "20px";
         productCard.style.outline = "1px solid gray";
 
         // create a product card image
@@ -93,16 +103,25 @@ export class App extends Component {
         productCardTextInfo.appendChild(productCardPrice);
 
         // create a product card button
-        const productCardBtn = document.createElement("button");
-        productCardBtn.textContent = "Add to Cart";
-        productCardBtn.style.marginRight = "10px";
-        productCardBtn.onclick = () => {
+        const productCardCartBtn = document.createElement("button");
+        productCardCartBtn.style.marginRight = "10px";
+        productCardCartBtn.style.border = "none";
+        productCardCartBtn.style.padding = "8px";
+        productCardCartBtn.style.borderRadius = "8px";
+        productCardCartBtn.style.cursor = "pointer";
+        const changeToDefaultBtn = () => {
+          productCardCartBtn.textContent = "Add to Cart";
+          productCardCartBtn.style.backgroundColor = "#FFD712";
+        };
+        changeToDefaultBtn();
+        productCardCartBtn.onclick = () => {
           const itemCount = parseInt(headerItemsInCart.textContent);
           const totalPrice = Number(headerPrice.textContent);
           const toInt = (num) => Math.trunc(num * 20);
 
-          if (productCardBtn.textContent === "Add to Cart") {
-            productCardBtn.textContent = "Remove from Cart";
+          if (productCardCartBtn.textContent === "Add to Cart") {
+            productCardCartBtn.textContent = "Remove from Cart";
+            productCardCartBtn.style.backgroundColor = "skyblue";
             headerItemsInCart.textContent = itemCount + 1;
             headerPrice.textContent =
               (toInt(totalPrice) + toInt(product.price)) / 20;
@@ -111,13 +130,23 @@ export class App extends Component {
             const productCardLabel = document.createElement("label");
             productCardLabel.textContent = "Quantity: ";
             productCardLabel.id = `productCardLabel-${product.id}`;
+            productCardLabel.htmlFor = `productCardInput-${product.id}`;
             productCardTextInfo.appendChild(productCardLabel);
             const productCardInput = document.createElement("input");
             productCardInput.type = "number";
-            productCardInput.min = "1";
             productCardInput.defaultValue = "1";
             productCardInput.onchange = (event) => {
               const quantity = parseInt(event.target.value);
+              if (quantity < 1) {
+                const minQuantity = 1;
+                productCardInput.value = minQuantity;
+                // update item count in cart
+                headerItemsInCart.textContent = itemCount + minQuantity;
+                // update total price
+                headerPrice.textContent =
+                  (toInt(totalPrice) + toInt(product.price) * minQuantity) / 20;
+                return;
+              }
               // update item count in cart
               headerItemsInCart.textContent = itemCount + quantity;
               // update total price
@@ -125,12 +154,15 @@ export class App extends Component {
                 (toInt(totalPrice) + toInt(product.price) * quantity) / 20;
             };
             productCardInput.id = `productCardInput-${product.id}`;
+            productCardInput.style.borderRadius = "8px";
+            productCardInput.style.padding = "8px";
+            productCardInput.style.border = "1px solid gray";
             productCardTextInfo.appendChild(productCardInput);
             return;
           }
 
+          changeToDefaultBtn();
           headerItemsInCart.textContent = itemCount - 1;
-          productCardBtn.textContent = "Add to Cart";
           headerPrice.textContent =
             parseFloat(headerPrice.textContent) - product.price;
 
@@ -147,7 +179,7 @@ export class App extends Component {
           productCardInput.remove();
           document.querySelector(`#productCardLabel-${product.id}`).remove();
         };
-        productCardTextInfo.appendChild(productCardBtn);
+        productCardTextInfo.appendChild(productCardCartBtn);
 
         productCard.appendChild(productCardTextInfo);
 
@@ -155,7 +187,8 @@ export class App extends Component {
       });
 
       container.appendChild(productsContainer);
-      return container;
+      wrapper.appendChild(container);
+      return wrapper;
     } catch (error) {
       console.log(error);
       return null;
