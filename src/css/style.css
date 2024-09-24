@@ -1,1 +1,97 @@
-/* YOUR CSS HERE */
+@media (max-width: 1000px) {
+  .productCardTitle,
+  .productCardDescription {
+    max-width: 700px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@media (max-width: 950px) {
+  .productCardTitle,
+  .productCardDescription {
+    max-width: 650px;
+  }
+}
+
+@media (max-width: 900px) {
+  .productCardTitle,
+  .productCardDescription {
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 850px) {
+  .productCardTitle,
+  .productCardDescription {
+    max-width: 550px;
+  }
+}
+
+@media (max-width: 800px) {
+  .productCardTitle,
+  .productCardDescription {
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 750px) {
+  .productCardTitle,
+  .productCardDescription {
+    max-width: 450px;
+  }
+}
+
+@media (max-width: 700px) {
+  .productCardTitle,
+  .productCardDescription {
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 650px) {
+  .productCardTitle,
+  .productCardDescription {
+    max-width: 350px;
+  }
+}
+
+@media (max-width: 600px) {
+  .productCardTitle,
+  .productCardDescription {
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 550px) {
+  .productCardTitle,
+  .productCardDescription {
+    max-width: 250px;
+  }
+}
+
+@media (max-width: 500px) {
+  .productCardTitle,
+  .productCardDescription {
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 450px) {
+  .productCardTitle,
+  .productCardDescription {
+    max-width: 150px;
+  }
+}
+
+@media (max-width: 400px) {
+  .productCardTitle,
+  .productCardDescription {
+    max-width: 100px;
+  }
+}
+
+body {
+  margin: 0;
+}
