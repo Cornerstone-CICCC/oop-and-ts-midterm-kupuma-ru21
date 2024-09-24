@@ -87,12 +87,8 @@ export class App extends Component {
         productCardDescription.className = "productCardDescription";
         productCardTextInfo.appendChild(productCardDescription);
 
-        const productCardPriceUnit = document.createElement("span");
-        productCardPriceUnit.textContent = "Price: $";
-        productCardTextInfo.appendChild(productCardPriceUnit);
-
         const productCardPrice = document.createElement("span");
-        productCardPrice.textContent = `${product.price}`;
+        productCardPrice.textContent = `Price: $${product.price}`;
         productCardPrice.style.marginRight = "10px";
         productCardTextInfo.appendChild(productCardPrice);
 
@@ -112,7 +108,7 @@ export class App extends Component {
             // create a product card quantity input
             const productCardLabel = document.createElement("label");
             productCardLabel.textContent = "Quantity: ";
-            productCardLabel.id = "productCardLabel";
+            productCardLabel.id = `productCardLabel-${product.id}`;
             productCardTextInfo.appendChild(productCardLabel);
             const productCardInput = document.createElement("input");
             productCardInput.type = "number";
@@ -120,9 +116,10 @@ export class App extends Component {
             productCardInput.defaultValue = "1";
             productCardInput.onchange = (event) => {
               const quantity = parseInt(event.target.value);
+              // update item count in cart
               headerItemsInCart.textContent = itemCount + quantity;
             };
-            productCardInput.id = "productCardInput";
+            productCardInput.id = `productCardInput-${product.id}`;
             productCardTextInfo.appendChild(productCardInput);
             return;
           }
@@ -133,11 +130,13 @@ export class App extends Component {
             parseFloat(headerPrice.textContent) - product.price;
 
           // remove product card quantity input
-          const productCardInput = document.querySelector("#productCardInput");
+          const productCardInput = document.querySelector(
+            `#productCardInput-${product.id}`
+          );
           headerItemsInCart.textContent = itemCount - productCardInput.value;
           productCardInput.remove();
 
-          document.querySelector("#productCardLabel").remove();
+          document.querySelector(`#productCardLabel-${product.id}`).remove();
         };
         productCardTextInfo.appendChild(productCardBtn);
 
