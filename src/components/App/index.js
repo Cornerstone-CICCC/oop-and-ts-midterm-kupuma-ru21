@@ -6,6 +6,7 @@ import { createHeaderCart } from "./functions/createHeaderCart.js";
 import { createHeaderItemsInCartDescription } from "./functions/createHeaderItemsInCartDescription.js";
 import { createHeaderItemsInCart } from "./functions/createHeaderItemsInCart.js";
 import { createHeaderPriceDescription } from "./functions/createHeaderPriceDescription.js";
+import { createHeaderPrice } from "./functions/createHeaderPrice.js";
 
 export class App extends Component {
   async render() {
@@ -25,8 +26,7 @@ export class App extends Component {
       headerCart.appendChild(headerItemsInCartDescription);
 
       const { headerPriceDescription } = createHeaderPriceDescription();
-      const headerPrice = document.createElement("span");
-      headerPrice.textContent = "0";
+      const { headerPrice } = createHeaderPrice();
       headerPriceDescription.appendChild(headerPrice);
 
       headerCart.appendChild(headerPriceDescription);
