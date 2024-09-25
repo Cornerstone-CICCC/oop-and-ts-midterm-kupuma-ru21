@@ -11,6 +11,7 @@ import { createContainer } from "./functions/createContainer.js";
 import { createTitle } from "./functions/createTitle.js";
 import { createProductsContainer } from "./functions/createProductsContainer.js";
 import { createProductCard } from "./functions/createProductCard.js";
+import { createProductCardImage } from "./functions/createProductCardImage.js";
 
 export class App extends Component {
   async render() {
@@ -49,14 +50,7 @@ export class App extends Component {
       products.forEach((product) => {
         const { productCard } = createProductCard();
 
-        // create a product card image
-        const productCardImage = document.createElement("img");
-        productCardImage.src = product.image;
-        productCardImage.alt = product.title;
-        productCardImage.style.width = "200px";
-        productCardImage.style.height = "200px";
-        productCardImage.style.minWidth = "200px";
-        productCardImage.style.outline = "1px solid gray";
+        const { productCardImage } = createProductCardImage({ product });
         productCard.appendChild(productCardImage);
 
         // create a product card text info
