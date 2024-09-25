@@ -3,6 +3,7 @@ import { getProducts } from "./functions/getProducts.js";
 import { createHeader } from "./functions/createHeader.js";
 import { createHeaderLogo } from "./functions/createHeaderLogo.js";
 import { createHeaderCart } from "./functions/createHeaderCart.js";
+import { createHeaderItemsInCartDescription } from "./functions/createHeaderItemsInCartDescription.js";
 
 export class App extends Component {
   async render() {
@@ -13,8 +14,9 @@ export class App extends Component {
       const { headerLogo } = createHeaderLogo();
       header.appendChild(headerLogo);
 
-      const headerItemsInCartDescription = document.createElement("span");
-      headerItemsInCartDescription.textContent = "Items in Cart: ";
+      const { headerItemsInCartDescription } =
+        createHeaderItemsInCartDescription();
+
       const headerItemsInCart = document.createElement("span");
       headerItemsInCart.textContent = "0";
       headerItemsInCartDescription.appendChild(headerItemsInCart);
