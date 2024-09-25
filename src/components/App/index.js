@@ -1,4 +1,4 @@
-import { Component } from "../common/Component.js";
+import { Component } from "../Component.js";
 
 export class App extends Component {
   async render() {
