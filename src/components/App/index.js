@@ -9,6 +9,7 @@ import { createHeaderPriceDescription } from "./functions/createHeaderPriceDescr
 import { createHeaderPrice } from "./functions/createHeaderPrice.js";
 import { createContainer } from "./functions/createContainer.js";
 import { createTitle } from "./functions/createTitle.js";
+import { createProductsContainer } from "./functions/createProductsContainer.js";
 
 export class App extends Component {
   async render() {
@@ -41,12 +42,7 @@ export class App extends Component {
       const { container } = createContainer();
       container.appendChild(title);
 
-      // create a productsContainer
-      const productsContainer = document.createElement("div");
-      productsContainer.style.display = "flex";
-      productsContainer.style.flexDirection = "column";
-      productsContainer.style.justifyContent = "center";
-      productsContainer.style.gap = "8px";
+      const { productsContainer } = createProductsContainer();
 
       // create a product card
       products.forEach((product) => {
