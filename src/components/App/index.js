@@ -14,6 +14,8 @@ import { createProductCard } from "./functions/createProductCard.js";
 import { createProductCardImage } from "./functions/createProductCardImage.js";
 import { createProductCardTitle } from "./functions/createProductCardTitle.js";
 import { getTotalItemCount } from "./functions/getTotalItemCount.js";
+import { getTotalPrice } from "./functions/getTotalPrice.js";
+import { toInt } from "./functions/toInt.js";
 
 export class App extends Component {
   async render() {
@@ -85,10 +87,6 @@ export class App extends Component {
         };
         changeToDefaultBtn();
         productCardCartBtn.onclick = () => {
-          const itemCount = parseInt(headerItemsInCart.textContent);
-          const totalPrice = Number(headerPrice.textContent);
-          const toInt = (num) => Math.trunc(num * 20);
-
           if (productCardCartBtn.textContent === "Add to Cart") {
             productCardCartBtn.textContent = "Remove from Cart";
             productCardCartBtn.style.backgroundColor = "skyblue";
@@ -99,10 +97,7 @@ export class App extends Component {
             );
 
             itemPriceData[product.id] = product.price;
-            console.log(getTotalItemCount(itemPriceData));
-
-            headerPrice.textContent =
-              (toInt(totalPrice) + toInt(product.price)) / 20;
+            headerPrice.textContent = String(getTotalPrice(itemPriceData));
 
             // create a product card quantity input
             const productCardLabel = document.createElement("label");
@@ -128,8 +123,8 @@ export class App extends Component {
                   )
                 );
                 // update total price
-                headerPrice.textContent =
-                  (toInt(totalPrice) + toInt(product.price) * minQuantity) / 20;
+                itemPriceData[product.id] = product.price;
+                headerPrice.textContent = String(getTotalPrice(itemPriceData));
                 return;
               }
               // update item count in cart
@@ -141,8 +136,9 @@ export class App extends Component {
                 )
               );
               // update total price
-              headerPrice.textContent =
-                (toInt(totalPrice) + toInt(product.price) * quantity) / 20;
+              itemPriceData[product.id] =
+                (toInt(product.price) * quantity) / 20;
+              headerPrice.textContent = String(getTotalPrice(itemPriceData));
             };
             productCardInput.id = `productCardInput-${product.id}`;
             productCardInput.style.borderRadius = "8px";
@@ -157,24 +153,12 @@ export class App extends Component {
           headerItemsInCart.textContent = String(
             getTotalItemCount(itemCountData)
           );
-          headerPrice.textContent =
-            parseFloat(headerPrice.textContent) - product.price;
+          itemPriceData[product.id] = 0;
+          headerPrice.textContent = String(getTotalPrice(itemPriceData));
 
           // remove product card quantity input
-          const productCardInput = document.querySelector(
-            `#productCardInput-${product.id}`
-          );
-
-          headerItemsInCart.textContent = String(
-            itemCount - Math.trunc(productCardInput.value)
-          );
-          headerPrice.textContent =
-            (toInt(totalPrice) -
-              toInt(product.price) * Number(productCardInput.value)) /
-            20;
-
-          productCardInput.remove();
           document.querySelector(`#productCardLabel-${product.id}`).remove();
+          document.querySelector(`#productCardInput-${product.id}`).remove();
         };
         productCardTextInfo.appendChild(productCardCartBtn);
 
