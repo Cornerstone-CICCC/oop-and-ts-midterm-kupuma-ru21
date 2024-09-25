@@ -13,6 +13,7 @@ import { createProductsContainer } from "./functions/createProductsContainer.js"
 import { createProductCard } from "./functions/createProductCard.js";
 import { createProductCardImage } from "./functions/createProductCardImage.js";
 import { createProductCardTitle } from "./functions/createProductCardTitle.js";
+import { getTotalItemCount } from "./functions/getTotalItemCount.js";
 
 export class App extends Component {
   async render() {
@@ -48,6 +49,8 @@ export class App extends Component {
       const { productsContainer } = createProductsContainer();
 
       // create a product card
+      const itemCountData = {};
+      const itemPriceData = {};
       products.forEach((product) => {
         const { productCard } = createProductCard();
 
@@ -89,7 +92,15 @@ export class App extends Component {
           if (productCardCartBtn.textContent === "Add to Cart") {
             productCardCartBtn.textContent = "Remove from Cart";
             productCardCartBtn.style.backgroundColor = "skyblue";
-            headerItemsInCart.textContent = String(itemCount + 1);
+
+            itemCountData[product.id] = 1;
+            headerItemsInCart.textContent = String(
+              getTotalItemCount(itemCountData)
+            );
+
+            itemPriceData[product.id] = product.price;
+            console.log(getTotalItemCount(itemPriceData));
+
             headerPrice.textContent =
               (toInt(totalPrice) + toInt(product.price)) / 20;
 
@@ -109,14 +120,26 @@ export class App extends Component {
                 const minQuantity = 1;
                 productCardInput.value = minQuantity;
                 // update item count in cart
-                headerItemsInCart.textContent = String(itemCount + minQuantity);
+                itemCountData[product.id] = minQuantity;
+                headerItemsInCart.textContent = String(
+                  Object.values(itemCountData).reduce(
+                    (acc, curr) => acc + curr,
+                    0
+                  )
+                );
                 // update total price
                 headerPrice.textContent =
                   (toInt(totalPrice) + toInt(product.price) * minQuantity) / 20;
                 return;
               }
               // update item count in cart
-              headerItemsInCart.textContent = String(itemCount + quantity);
+              itemCountData[product.id] = quantity;
+              headerItemsInCart.textContent = String(
+                Object.values(itemCountData).reduce(
+                  (acc, curr) => acc + curr,
+                  0
+                )
+              );
               // update total price
               headerPrice.textContent =
                 (toInt(totalPrice) + toInt(product.price) * quantity) / 20;
@@ -130,7 +153,10 @@ export class App extends Component {
           }
 
           changeToDefaultBtn();
-          headerItemsInCart.textContent = String(itemCount - 1);
+          itemCountData[product.id] = 0;
+          headerItemsInCart.textContent = String(
+            getTotalItemCount(itemCountData)
+          );
           headerPrice.textContent =
             parseFloat(headerPrice.textContent) - product.price;
 
