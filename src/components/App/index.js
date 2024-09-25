@@ -119,8 +119,9 @@ export class App extends Component {
             productCardInput.type = "number";
             productCardInput.defaultValue = "1";
             productCardInput.onchange = (event) => {
-              const quantity = parseInt(event.target.value);
-              if (quantity < 1) {
+              const inputValue = event.target.value;
+              const quantity = parseInt(inputValue);
+              if (inputValue === "" || quantity < 1) {
                 const minQuantity = 1;
                 productCardInput.value = minQuantity;
                 // update item count in cart
