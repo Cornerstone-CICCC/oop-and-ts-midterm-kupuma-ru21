@@ -8,6 +8,7 @@ import { createHeaderItemsInCart } from "./functions/createHeaderItemsInCart.js"
 import { createHeaderPriceDescription } from "./functions/createHeaderPriceDescription.js";
 import { createHeaderPrice } from "./functions/createHeaderPrice.js";
 import { createContainer } from "./functions/createContainer.js";
+import { createTitle } from "./functions/createTitle.js";
 
 export class App extends Component {
   async render() {
@@ -36,10 +37,7 @@ export class App extends Component {
       const wrapper = document.createElement("div");
       wrapper.appendChild(header);
 
-      // create a title
-      const title = document.createElement("h1");
-      title.textContent = "Products";
-      title.style.marginBottom = "20px";
+      const { title } = createTitle();
       const { container } = createContainer();
       container.appendChild(title);
 
