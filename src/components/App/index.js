@@ -1,11 +1,10 @@
 import { Component } from "../Component.js";
+import { getProducts } from "./functions/getProducts.js";
 
 export class App extends Component {
   async render() {
     try {
-      // fetch products data
-      const productsData = await fetch("https://fakestoreapi.com/products");
-      const products = await productsData.json();
+      const { products } = await getProducts();
 
       // create a wrapper
       const wrapper = document.createElement("div");
