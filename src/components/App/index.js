@@ -16,6 +16,12 @@ import { createProductCardTitle } from "./functions/dom/createProductCardTitle.j
 import { getTotalItemCount } from "./functions/getTotalItemCount.js";
 import { getTotalPrice } from "./functions/getTotalPrice.js";
 import { toInt } from "./functions/toInt.js";
+import { createProductCardDescription } from "./functions/dom/createProductCardDescription.js";
+import { createProductCardPrice } from "./functions/dom/createProductCardPrice.js";
+import { createProductCardCartBtn } from "./functions/dom/createProductCardCartBtn.js";
+import { addDefaultStyleToBtn } from "./functions/dom/addDefaultStyleToBtn.js";
+import { createProductCardInput } from "./functions/dom/productCardInput.js";
+import { createProductCardLabel } from "./functions/dom/createProductCardLabel.js";
 
 export class App extends Component {
   async render() {
@@ -64,28 +70,17 @@ export class App extends Component {
         const { productCardTitle } = createProductCardTitle({ product });
         productCardTextInfo.appendChild(productCardTitle);
 
-        const productCardDescription = document.createElement("p");
-        productCardDescription.textContent = product.description;
-        productCardDescription.className = "productCardDescription";
+        const { productCardDescription } = createProductCardDescription({
+          product,
+        });
         productCardTextInfo.appendChild(productCardDescription);
 
-        const productCardPrice = document.createElement("span");
-        productCardPrice.textContent = `Price: $${product.price}`;
-        productCardPrice.style.marginRight = "10px";
+        const { productCardPrice } = createProductCardPrice({ product });
         productCardTextInfo.appendChild(productCardPrice);
 
         // create a product card button
-        const productCardCartBtn = document.createElement("button");
-        productCardCartBtn.style.marginRight = "10px";
-        productCardCartBtn.style.border = "none";
-        productCardCartBtn.style.padding = "8px";
-        productCardCartBtn.style.borderRadius = "8px";
-        productCardCartBtn.style.cursor = "pointer";
-        const changeToDefaultBtn = () => {
-          productCardCartBtn.textContent = "Add to Cart";
-          productCardCartBtn.style.backgroundColor = "#FFD712";
-        };
-        changeToDefaultBtn();
+        const { productCardCartBtn } = createProductCardCartBtn();
+        addDefaultStyleToBtn({ btn: productCardCartBtn });
         productCardCartBtn.onclick = () => {
           if (productCardCartBtn.textContent === "Add to Cart") {
             productCardCartBtn.textContent = "Remove from Cart";
@@ -100,14 +95,10 @@ export class App extends Component {
             headerPrice.textContent = String(getTotalPrice(itemPriceData));
 
             // create a product card quantity input
-            const productCardLabel = document.createElement("label");
-            productCardLabel.textContent = "Quantity: ";
-            productCardLabel.id = `productCardLabel-${product.id}`;
-            productCardLabel.htmlFor = `productCardInput-${product.id}`;
+            const { productCardLabel } = createProductCardLabel({ product });
             productCardTextInfo.appendChild(productCardLabel);
-            const productCardInput = document.createElement("input");
-            productCardInput.type = "number";
-            productCardInput.defaultValue = "1";
+
+            const { productCardInput } = createProductCardInput({ product });
             productCardInput.onchange = (event) => {
               const inputValue = event.target.value;
               const quantity = parseInt(inputValue);
@@ -140,15 +131,11 @@ export class App extends Component {
                 (toInt(product.price) * quantity) / 20;
               headerPrice.textContent = String(getTotalPrice(itemPriceData));
             };
-            productCardInput.id = `productCardInput-${product.id}`;
-            productCardInput.style.borderRadius = "8px";
-            productCardInput.style.padding = "8px";
-            productCardInput.style.border = "1px solid gray";
             productCardTextInfo.appendChild(productCardInput);
             return;
           }
 
-          changeToDefaultBtn();
+          addDefaultStyleToBtn({ btn: productCardCartBtn });
           itemCountData[product.id] = 0;
           headerItemsInCart.textContent = String(
             getTotalItemCount(itemCountData)
