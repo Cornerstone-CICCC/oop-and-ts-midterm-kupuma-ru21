@@ -13,13 +13,13 @@ export class App extends Component {
       const { headerLogo } = createHeaderLogo();
       header.appendChild(headerLogo);
 
-      const { headerCart } = createHeaderCart();
-
       const headerItemsInCartDescription = document.createElement("span");
       headerItemsInCartDescription.textContent = "Items in Cart: ";
       const headerItemsInCart = document.createElement("span");
       headerItemsInCart.textContent = "0";
       headerItemsInCartDescription.appendChild(headerItemsInCart);
+
+      const { headerCart } = createHeaderCart();
       headerCart.appendChild(headerItemsInCartDescription);
 
       const headerPriceDescription = document.createElement("span");
