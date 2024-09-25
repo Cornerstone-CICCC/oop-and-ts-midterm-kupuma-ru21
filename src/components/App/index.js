@@ -5,6 +5,7 @@ import { createHeaderLogo } from "./functions/createHeaderLogo.js";
 import { createHeaderCart } from "./functions/createHeaderCart.js";
 import { createHeaderItemsInCartDescription } from "./functions/createHeaderItemsInCartDescription.js";
 import { createHeaderItemsInCart } from "./functions/createHeaderItemsInCart.js";
+import { createHeaderPriceDescription } from "./functions/createHeaderPriceDescription.js";
 
 export class App extends Component {
   async render() {
@@ -23,8 +24,7 @@ export class App extends Component {
       const { headerCart } = createHeaderCart();
       headerCart.appendChild(headerItemsInCartDescription);
 
-      const headerPriceDescription = document.createElement("span");
-      headerPriceDescription.textContent = "/ Total Price: $ ";
+      const { headerPriceDescription } = createHeaderPriceDescription();
       const headerPrice = document.createElement("span");
       headerPrice.textContent = "0";
       headerPriceDescription.appendChild(headerPrice);
