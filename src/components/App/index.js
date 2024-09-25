@@ -1,25 +1,13 @@
 import { Component } from "../Component.js";
 import { getProducts } from "./functions/getProducts.js";
+import { createHeader } from "./functions/createHeader.js";
 
 export class App extends Component {
   async render() {
     try {
       const { products } = await getProducts();
-
-      // create a wrapper
       const wrapper = document.createElement("div");
-
-      // create a header
-      const header = document.createElement("header");
-      header.style.display = "flex";
-      header.style.justifyContent = "space-between";
-      header.style.alignItems = "center";
-      header.style.outline = "1px solid gray";
-      header.style.padding = "8px";
-      header.style.position = "sticky";
-      header.style.top = "0";
-      header.style.backgroundColor = "#0F141A";
-      header.style.color = "#fff";
+      const { header } = createHeader();
 
       const headerLogo = document.createElement("img");
       headerLogo.src = "/public/logo.svg";
