@@ -2,6 +2,7 @@ import { Component } from "../Component.js";
 import { getProducts } from "./functions/getProducts.js";
 import { createHeader } from "./functions/createHeader.js";
 import { createHeaderLogo } from "./functions/createHeaderLogo.js";
+import { createHeaderCart } from "./functions/createHeaderCart.js";
 
 export class App extends Component {
   async render() {
@@ -12,9 +13,7 @@ export class App extends Component {
       const { headerLogo } = createHeaderLogo();
       header.appendChild(headerLogo);
 
-      const headerCart = document.createElement("div");
-      headerCart.style.display = "flex";
-      headerCart.style.gap = "8px";
+      const { headerCart } = createHeaderCart();
 
       const headerItemsInCartDescription = document.createElement("span");
       headerItemsInCartDescription.textContent = "Items in Cart: ";
