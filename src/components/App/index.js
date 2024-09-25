@@ -10,6 +10,7 @@ import { createHeaderPrice } from "./functions/createHeaderPrice.js";
 import { createContainer } from "./functions/createContainer.js";
 import { createTitle } from "./functions/createTitle.js";
 import { createProductsContainer } from "./functions/createProductsContainer.js";
+import { createProductCard } from "./functions/createProductCard.js";
 
 export class App extends Component {
   async render() {
@@ -46,10 +47,7 @@ export class App extends Component {
 
       // create a product card
       products.forEach((product) => {
-        const productCard = document.createElement("div");
-        productCard.style.display = "flex";
-        productCard.style.gap = "20px";
-        productCard.style.outline = "1px solid gray";
+        const { productCard } = createProductCard();
 
         // create a product card image
         const productCardImage = document.createElement("img");
