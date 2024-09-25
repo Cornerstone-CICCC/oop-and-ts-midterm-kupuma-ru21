@@ -89,7 +89,7 @@ export class App extends Component {
           if (productCardCartBtn.textContent === "Add to Cart") {
             productCardCartBtn.textContent = "Remove from Cart";
             productCardCartBtn.style.backgroundColor = "skyblue";
-            headerItemsInCart.textContent = itemCount + 1;
+            headerItemsInCart.textContent = String(itemCount + 1);
             headerPrice.textContent =
               (toInt(totalPrice) + toInt(product.price)) / 20;
 
@@ -109,14 +109,14 @@ export class App extends Component {
                 const minQuantity = 1;
                 productCardInput.value = minQuantity;
                 // update item count in cart
-                headerItemsInCart.textContent = itemCount + minQuantity;
+                headerItemsInCart.textContent = String(itemCount + minQuantity);
                 // update total price
                 headerPrice.textContent =
                   (toInt(totalPrice) + toInt(product.price) * minQuantity) / 20;
                 return;
               }
               // update item count in cart
-              headerItemsInCart.textContent = itemCount + quantity;
+              headerItemsInCart.textContent = String(itemCount + quantity);
               // update total price
               headerPrice.textContent =
                 (toInt(totalPrice) + toInt(product.price) * quantity) / 20;
@@ -130,7 +130,7 @@ export class App extends Component {
           }
 
           changeToDefaultBtn();
-          headerItemsInCart.textContent = itemCount - 1;
+          headerItemsInCart.textContent = String(itemCount - 1);
           headerPrice.textContent =
             parseFloat(headerPrice.textContent) - product.price;
 
@@ -138,7 +138,10 @@ export class App extends Component {
           const productCardInput = document.querySelector(
             `#productCardInput-${product.id}`
           );
-          headerItemsInCart.textContent = itemCount - productCardInput.value;
+
+          headerItemsInCart.textContent = String(
+            itemCount - Math.trunc(productCardInput.value)
+          );
           headerPrice.textContent =
             (toInt(totalPrice) -
               toInt(product.price) * Number(productCardInput.value)) /
