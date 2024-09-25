@@ -7,7 +7,6 @@ export class App extends Component {
   async render() {
     try {
       const { products } = await getProducts();
-      const wrapper = document.createElement("div");
       const { header } = createHeader();
 
       const { headerLogo } = createHeaderLogo();
@@ -33,6 +32,7 @@ export class App extends Component {
       headerCart.appendChild(headerPriceDescription);
       header.appendChild(headerCart);
 
+      const wrapper = document.createElement("div");
       wrapper.appendChild(header);
 
       // create a container
