@@ -12,6 +12,7 @@ import { createTitle } from "./functions/createTitle.js";
 import { createProductsContainer } from "./functions/createProductsContainer.js";
 import { createProductCard } from "./functions/createProductCard.js";
 import { createProductCardImage } from "./functions/createProductCardImage.js";
+import { createProductCardTitle } from "./functions/createProductCardTitle.js";
 
 export class App extends Component {
   async render() {
@@ -55,9 +56,7 @@ export class App extends Component {
 
         // create a product card text info
         const productCardTextInfo = document.createElement("div");
-        const productCardTitle = document.createElement("h2");
-        productCardTitle.textContent = product.title;
-        productCardTitle.className = "productCardTitle";
+        const { productCardTitle } = createProductCardTitle({ product });
         productCardTextInfo.appendChild(productCardTitle);
 
         const productCardDescription = document.createElement("p");
