@@ -1,6 +1,7 @@
 import { Component } from "../Component.js";
 import { getProducts } from "./functions/getProducts.js";
 import { createHeader } from "./functions/createHeader.js";
+import { createHeaderLogo } from "./functions/createHeaderLogo.js";
 
 export class App extends Component {
   async render() {
@@ -9,11 +10,7 @@ export class App extends Component {
       const wrapper = document.createElement("div");
       const { header } = createHeader();
 
-      const headerLogo = document.createElement("img");
-      headerLogo.src = "/public/logo.svg";
-      headerLogo.alt = "logo";
-      headerLogo.style.width = "130px";
-      headerLogo.style.height = "50px";
+      const { headerLogo } = createHeaderLogo();
       header.appendChild(headerLogo);
 
       const headerCart = document.createElement("div");
