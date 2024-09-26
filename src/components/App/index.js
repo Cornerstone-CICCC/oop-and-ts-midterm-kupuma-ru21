@@ -60,7 +60,7 @@ export class App extends Component {
       const itemCountData = {};
       const itemPriceData = {};
       products.forEach((product) => {
-        const { productCard } = createProductCard();
+        const { productCard } = createProductCard({ productId: product.id });
 
         const { productCardImage } = createProductCardImage({ product });
         productCard.appendChild(productCardImage);
