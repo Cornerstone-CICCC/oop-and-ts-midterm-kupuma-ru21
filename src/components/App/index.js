@@ -1,10 +1,10 @@
 import { Component } from "../Component.js";
+import { addStylesToSortBtn } from "./functions/addStylesToSortBtn.js";
 import { getProducts } from "./products/functions/getProducts.js";
 import { getProductsPage } from "./products/getProductsPage.js";
 
 export class App extends Component {
   async render() {
-    let test = null;
     const originalPushState = history.pushState;
     history.pushState = function (...args) {
       const result = originalPushState.apply(this, args);
@@ -27,6 +27,7 @@ export class App extends Component {
         sortBtn.onclick = () => {
           history.pushState({}, "", "/");
         };
+        addStylesToSortBtn({ sortBtn });
         return getProductsPage({ products: productsDesc, sortBtn });
       } catch (error) {
         console.log(error);
@@ -43,6 +44,7 @@ export class App extends Component {
         url.searchParams.set("sort", "desc");
         history.pushState({}, "", url);
       };
+      addStylesToSortBtn({ sortBtn });
       return getProductsPage({ products, sortBtn });
     } catch (error) {
       console.log(error);
