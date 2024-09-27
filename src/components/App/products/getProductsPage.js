@@ -78,6 +78,23 @@ export const getProductsPage = ({ products, sortBtn }) => {
     });
     productCardTextInfo.appendChild(productCardDescription);
 
+    const buttonToDetail = document.createElement("button");
+    buttonToDetail.textContent = "View Detail";
+    buttonToDetail.style.marginRight = "10px";
+    buttonToDetail.style.backgroundColor = "teal";
+    buttonToDetail.style.color = "white";
+    buttonToDetail.style.padding = "8px";
+    buttonToDetail.style.border = "none";
+    buttonToDetail.style.borderRadius = "5px";
+    buttonToDetail.onclick = () => {
+      history.pushState({}, "", "/");
+
+      const url = new URL(location);
+      url.searchParams.set("id", product.id);
+      history.pushState({}, "", url);
+    };
+    productCardTextInfo.appendChild(buttonToDetail);
+
     const { productCardPrice } = createProductCardPrice({ product });
     productCardTextInfo.appendChild(productCardPrice);
 

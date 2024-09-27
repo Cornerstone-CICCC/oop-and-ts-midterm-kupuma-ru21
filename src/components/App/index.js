@@ -1,7 +1,10 @@
 import { Component } from "../Component.js";
 import { addStylesToSortBtn } from "./functions/addStylesToSortBtn.js";
+import { getProductPage } from "./product/getProductPage.js";
 import { getProducts } from "./products/functions/getProducts.js";
 import { getProductsPage } from "./products/getProductsPage.js";
+
+window.historyInitiated = true;
 
 export class App extends Component {
   async render() {
@@ -12,9 +15,19 @@ export class App extends Component {
       return result;
     };
     window.addEventListener("urlchange", () => {
-      console.log("URL changed:", window.location.href);
       location.reload();
     });
+
+    window.addEventListener("popstate", () => {
+      if (window.historyInitiated) {
+        window.location.reload();
+      }
+    });
+
+    if (location.search.startsWith("?id=")) {
+      const productId = location.search.split("=")[1];
+      return getProductPage({ productId });
+    }
 
     if (location.search === "?sort=desc") {
       try {
