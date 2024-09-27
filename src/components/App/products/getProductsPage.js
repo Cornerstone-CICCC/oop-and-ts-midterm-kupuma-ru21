@@ -1,4 +1,3 @@
-import { getProducts } from "./functions/getProducts.js";
 import { createHeader } from "./functions/dom/createHeader.js";
 import { createHeaderLogo } from "./functions/dom/createHeaderLogo.js";
 import { createHeaderCart } from "./functions/dom/createHeaderCart.js";
@@ -22,8 +21,7 @@ import { addDefaultStyleToBtn } from "./functions/dom/addDefaultStyleToBtn.js";
 import { createProductCardInput } from "./functions/dom/productCardInput.js";
 import { createProductCardLabel } from "./functions/dom/createProductCardLabel.js";
 
-export const getProductsPage = async () => {
-  const { products } = await getProducts();
+export const getProductsPage = ({ products, sortBtn }) => {
   const { header } = createHeader();
 
   const { headerLogo } = createHeaderLogo();
@@ -46,9 +44,18 @@ export const getProductsPage = async () => {
   const wrapper = document.createElement("div");
   wrapper.appendChild(header);
 
+  const localHeader = document.createElement("header");
+  localHeader.style.display = "flex";
+  localHeader.style.gap = "20px";
+  localHeader.style.marginBottom = "20px";
+
   const { title } = createTitle();
+  localHeader.appendChild(title);
+
+  localHeader.appendChild(sortBtn);
+
   const { container } = createContainer();
-  container.appendChild(title);
+  container.appendChild(localHeader);
 
   const { productsContainer } = createProductsContainer();
 
