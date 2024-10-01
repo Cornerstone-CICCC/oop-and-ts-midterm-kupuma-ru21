@@ -37,6 +37,7 @@ export class App extends Component {
         const productsDesc = await productsDescData.json();
         const sortBtn = document.createElement("button");
         sortBtn.textContent = "Asc";
+        sortBtn.style.cursor = "pointer";
         sortBtn.onclick = () => {
           history.pushState({}, "", "/");
         };
@@ -51,6 +52,7 @@ export class App extends Component {
     try {
       const { products } = await getProducts();
       const sortBtn = document.createElement("button");
+      sortBtn.style.cursor = "pointer";
       sortBtn.textContent = "Desc";
       sortBtn.onclick = () => {
         const url = new URL(location);

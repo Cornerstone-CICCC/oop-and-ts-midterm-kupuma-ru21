@@ -66,6 +66,7 @@ export const getProductPage = async ({ productId }) => {
 
     const shareProductBtn = document.createElement("button");
     shareProductBtn.textContent = "Share";
+    shareProductBtn.style.cursor = "pointer";
     shareProductBtn.onclick = async () => {
       try {
         await navigator.share({ title: document.title, url: "" });

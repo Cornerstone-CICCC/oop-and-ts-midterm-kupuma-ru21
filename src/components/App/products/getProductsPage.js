@@ -86,6 +86,7 @@ export const getProductsPage = ({ products, sortBtn }) => {
     buttonToDetail.style.padding = "8px";
     buttonToDetail.style.border = "none";
     buttonToDetail.style.borderRadius = "5px";
+    buttonToDetail.style.cursor = "pointer";
     buttonToDetail.onclick = () => {
       history.pushState({}, "", "/");
 
