@@ -67,6 +67,11 @@ export const getProductPage = async ({ productId }) => {
     const shareProductBtn = document.createElement("button");
     shareProductBtn.textContent = "Share";
     shareProductBtn.style.cursor = "pointer";
+    shareProductBtn.style.borderRadius = "5px";
+    shareProductBtn.style.border = "none";
+    shareProductBtn.style.backgroundColor = "orange";
+    shareProductBtn.style.padding = "8px";
+
     shareProductBtn.onclick = async () => {
       try {
         await navigator.share({ title: document.title, url: "" });
